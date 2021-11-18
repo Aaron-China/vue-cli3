@@ -6,10 +6,6 @@ function resolve (dir) {
 
 // https://cli.vuejs.org/zh/config/#css-loaderoptions
 module.exports = {
-    configureWebpack: {
-        // Ignore all locale files of moment.js
-        plugins: [new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)]
-    },
     pluginOptions: {
         'style-resources-loader': {
             preProcessor: 'less',

@@ -54,6 +54,7 @@ export default defineComponent({
         let permission = [
             { type: 'menu', path: '/report', key: '' },
             { type: 'btn', path: '/report', key: 'add' },
+            { type: 'btn', path: '/report', key: 'edit' },
             { type: 'btn', path: '/report', key: 'delete' },
             { type: 'btn', path: '/report', key: 'export' },
             { type: 'menu', path: '/setting/user/add' },
@@ -66,7 +67,9 @@ export default defineComponent({
           if(auth[item.path]) {
             auth[item.path][item.key] = true
           } else {
-            auth[item.path] = {}
+            auth[item.path] = {
+              [item.key]: true
+            }
           }
         })
         store.commit('app/setUser', {

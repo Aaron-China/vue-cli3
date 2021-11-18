@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <a href="https://github.com/Aaron-China/vue-cli" style="color: red; text-decoration: none;" target="_blank">vue-cli地址</a>
+  <a href="https://github.com/Aaron-China/vue-cli3" style="color: red; text-decoration: none;" target="_blank">vue-cli3地址</a>
+  <!-- 
+    cli文档： https://cli.vuejs.org/zh/guide/creating-a-project.html#vue-create
+    config文件配置参考： https://cli.vuejs.org/zh/config/#%E5%85%A8%E5%B1%80-cli-%E9%85%8D%E7%BD%AE
+    vite兼容性差点，还有行为差异，这里稳妥起见还是用webpack
+
+    1、npm uninstall vue-cli -g           卸载老版本cli
+    2、npm i @vue/cli -g                  安装新版本cli
+    3、npm install -g @vue/cli-init       安装cli
+    4、vue -V                             查看cli的版本号，注意大小写
+    5、vue create vue-cli                 创建vue3.0项目, 记得选择vue3选项
+    6、完善文件目录 api store route等，先把文件目录搭建起来
+    7、创建vue.config.js配置文件，配置路径别名、请求转发、端口号等
+    6、npm install vue-router@4             安装路由，4.0版本的
+    7、完善文件目录 api store等等
+    8、./config/index.js  文件 dev 开发环境，修改配置，增加请求代理、相对路径等配置
+    9、npm i --save ant-design-vue@next   安装 antd3.x的版本  3.0还在不断更新的阶段
+       npm install babel-plugin-import --save-dev    引入babel， 配置 babel.config 文件，antd组件的按需加载
+       npm install --save @ant-design/icons-vue  需要的话，引入antd的icon
+    10、npm install less --save  引入less
+        npm i less-loader@4.1.0   注意版本号
+        npm i style-resources-loader vue-cli-plugin-style-resources-loader -D  安装插件，vue.config.js 文件，增加less文件全局配置，主要配置全局变量
+    11、npm install dayjs --save 并全局配置下 dayjs， 如果报错，重装一下ant-design-vue,dayjs比moment更加轻量
+    12、npm install vuex@next --save   安装vuex，并配置
+    13、npm install axios   安装 axios，并做统一配置
+
+
+    main.js
+      vue3.0 升级，就是为了用 typescript 重写vue，因为typescript的迭代更好，更适合大型项目
+      1、2.0有全局的对象 Vue，3.0改用 const app = createApp(App) 创建实例，少了数据污染问题，但组件挂载都需要在创建实例后
+          统一执行，而且createApp有内置生命周期
+      2、全局变量绑定不再使用Protype，而是通过这样绑定 app.config.globalProperties.$moment = moment
+      3、slot插槽做了统一， <a-menu slot="overlay"> 弃用了，改为 <template #overlay></template>
+      4、data弃用对象形式，只是用函数形式
+      5、使用 typescript 语言， 他是微软推出的JavaScript的超集，变量啥的需要明确数据类型
+          当中语法的详细区别，还是看 typescript 文档吧
+      6、step(props, context) 代替 data， 他在  props解析之后，beforeCreate 执行之前调用
+          他触发在data之前，所以this为初始化，data methods都取不到
+          他减少了变量监听的地方，只有需要反馈到UI的变量才会输出
+          感觉就是完全新写了一套，和react之前类组价一样的写法。但是现在setup和data都兼容而已
+      7、defineComponent 创建组件，他对step做了封装，支持了这个语法
+      8、 关于setup 尤雨溪给的最好的文档
+          https://zhuanlan.zhihu.com/p/68477600
+          最新的组合api文档
+          https://v3.vuejs.org/guide/composition-api-introduction.html#why-composition-api
+          props: {
+            options: (null as any) as PropType<{ msg: string }>   // { msg: string }
+          },
+            const str = ref('aa');
+            const count = ref(0);
+            const obj = reactive({ name: '张三', age: 15})
+            const countPlusOne = computed(() => count.value + 1)
+            watch(() => props.id, async (id) => {
+              data.value = await fetchData(id)
+            })
+            watch(count, value => {
+              console.log('double the count is: ', value)
+            })
+
+            const getUserRepositories = async () => {
+              repositories = await fetchUserRepositories(props.user)
+            }
+
+
+            const chnageStr = (d) => {
+              console.log(d)
+              str.value = d+'b'
+            }
+            return {
+              msg,
+              chnageStr
+            }
+
+            ref 包装响应式对象，自动延展 .value属性， 所以通常定义数值等简单类型
+            reactive 声明响应式对象，通常定义 对象、数组等复杂类型
+            computed 计算属性，效果和以前一样，依赖变化，重新计算，注意返回值是只读的，不能再修改
+            watch  初始化就会执行一次
+
+
+
+
+            注意： vuex改用createStore创建， vue-route改用createRouter创建， setup中个人习惯，获取根节点，然后就和之前版本一样的用法了
+    根据vuex迁移文档，
+        import { useRouter } from 'vue-router';
+        import { useStore } from 'vuex';
+        const store = useStore();
+        const router = useRouter();
+
+        脚手架从头搭建，但是功能还是依托于vue-cli，升级后改动很大，源码公开，细节就不详细写了，每个模块会详细写一下。
+        这里对vue-cli自定义的组件等也做了一定优化
+
+RESTful  api 前端继承的
+    准备着手写博客了，写一下这个基础项目的搭建过程
+
+    然后另起一个分支，上面
+      1、highchart的 甘特图，要能拖动的
+      2、three
+      3、大屏编辑、展示
+      4、等等吧，有需要的功能都写一下，以后用着方便
+    国际化有问题，时间翻译了一半
+    热更新，removeEventListener  报错的问题
+    2020 5.27 -- 8.7 7倍+    西藏药业
+    10.23 -- 12.25   3倍+    金种子酒
+    2.19 3.26 1 南网
+    2021 7.28 -- 8.7 100倍+  ACH
+    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
+
+    https://zhuanlan.zhihu.com/p/382616874
+    setup 用法
+
+
+
+
+
+
+
+        1、先写博客
+        2、highCharts的甘特图，要能拖动的
+        3、fbi 那套数据 时间监听的功能，再写一遍
+        4、大屏那块，看看吧，可以重新写一下
+        5.js基础， node基础
+
+
+
+   -->
+</body>
+</html>

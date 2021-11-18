@@ -3,9 +3,9 @@
     <div class="list-box">
       <search-model :formList="formList" @onSearch="handleSearch" @onBack="handleBack">
         <template #tool-left>
-          <a-button class="n-btn" @click="add" >新增</a-button>
-          <a-button class="d-btn" style="margin-left: 15px;" @click="deleteM" >批量删除</a-button>
-          <a-button class="n-btn" style="margin-left: 15px;" @click="exportE">导出</a-button>
+          <a-button v-if="auth.add" class="n-btn" @click="add" >新增</a-button>
+          <a-button v-if="auth.delete" class="d-btn" style="margin-left: 15px;" @click="deleteM" >批量删除</a-button>
+          <a-button v-if="auth.export" class="n-btn" style="margin-left: 15px;" @click="exportE">导出</a-button>
         </template>
       </search-model>
       <c-table
@@ -89,7 +89,7 @@ export default defineComponent({
         width: 70,
         align: 'center',
         customRender: ({ record }) => {
-          return (<a onClick={() => edit(record) }>编辑</a>)
+          return auth.edit ? (<a onClick={() => edit(record) }>编辑</a>) : ''
         }
       }
     ];
@@ -111,6 +111,7 @@ export default defineComponent({
       type: 'add',
       form: {}
     });
+    const auth = store.state.app.auth[window.location.pathname] || {};
 
     // 查询表格数据
     const getData = () => {
@@ -230,6 +231,7 @@ export default defineComponent({
       table,             // 表格相关数据
       modal,             // 新增/编辑弹窗
       modalFormList,     // 弹窗编辑项
+      auth,              // 当前页面按钮权限
       handleSelect,
       tableChange,
       handleSearch,

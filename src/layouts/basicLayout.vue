@@ -58,6 +58,7 @@ export default defineComponent({
       let p = [
         { type: 'menu', path: '/report', key: '' },
         { type: 'btn', path: '/report', key: 'add' },
+        { type: 'btn', path: '/report', key: 'edit' },
         { type: 'btn', path: '/report', key: 'delete' },
         { type: 'btn', path: '/report', key: 'export' },
         { type: 'menu', path: '/setting/user/add' },
@@ -70,7 +71,9 @@ export default defineComponent({
         if(a[item.path]) {
           a[item.path][item.key] = true
         } else {
-          a[item.path] = {}
+          a[item.path] = {
+            [item.key]: true
+          }
         }
       })
       store.commit('app/setUser', {
