@@ -7,7 +7,7 @@
 
 <script>
 import { defineComponent, onMounted, ref } from 'vue';
-import * as Highcharts from '@jsModule/highcharts/highcharts-gantt.src.js'
+import * as Highcharts from '@jsModule/highcharts/highcharts-gantt.js'
 import dayjs from 'dayjs'
 import{ WEEKS } from './constants'
 
