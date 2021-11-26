@@ -88,9 +88,9 @@ export default defineComponent({
         })
       }
     }
-    
-    const handleClick = (e) => {
-      console.log('点击')
+    // 选中，可以弹窗，编辑一些业务数据
+    const handleSelect = (e) => {
+      console.log('选中')
     }
     // 获取最终数据
     const getData = () => {
@@ -180,7 +180,7 @@ export default defineComponent({
                   dragStart: dragStart,
                   drag: drag,
                   drop: drop,
-                  click: handleClick
+                  select: handleSelect
                 }
               }
             }
