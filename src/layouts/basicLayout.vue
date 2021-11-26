@@ -65,12 +65,15 @@ export default defineComponent({
         { type: 'menu', path: '/setting/user/delete' },
         { type: 'menu', path: '/setting/role' },
         { type: 'menu', path: '/login' },
+        { type: 'menu', path: '/hightChartsGantt' },
       ], a = {};
       p.filter(item => item.type === 'btn').forEach(item => {
         if(a[item.path]) {
           a[item.path][item.key] = true
         } else {
-          a[item.path] = {}
+          a[item.path] = {
+            [item.key]: true
+          }
         }
       })
       store.commit('app/setUser', {

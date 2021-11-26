@@ -54,7 +54,13 @@ export const ROUTE = [
             component: () => import('@views/role.vue')
           }
         ]
-      }
+      },
+      {
+        path: '/hightChartsGantt',
+        name: 'hightChartsGantt',
+        title: 'highCharts甘特图',
+        component: () => import('@views/hightChartsGantt/index.vue')
+      },
     ]
   },
   {
