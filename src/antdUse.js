@@ -29,9 +29,8 @@ import {
   TimePicker,
   Upload,
   Popconfirm,
-  message,
-  notification,
   configProvider,
+  Popover
 } from "ant-design-vue";
 
 const antdUse = (app) => {
@@ -62,9 +61,7 @@ const antdUse = (app) => {
   app.use(Upload);
   app.use(Popconfirm);
   app.use(configProvider);
-  
-  app.config.globalProperties.$message = message;
-  app.config.globalProperties.$notification = notification;
+  app.use(Popover);
 };
 
 export default antdUse;

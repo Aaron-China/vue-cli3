@@ -29,13 +29,14 @@ module.exports = {
             .set('@api', resolve('src/api'))
             .set('@assets', resolve('src/assets'))
             .set('@layouts', resolve('src/layouts'))
-            .set('@static', resolve('src/static'))
+            .set('@constants', resolve('src/constants'))
             .set('@components', resolve('src/components'))
             .set('@router', resolve('src/router'))
             .set('@jsModule', resolve('src/jsModule'))
             .set('@utils', resolve('src/utils'))
             .set('@store', resolve('src/store'))
             .set('@views', resolve('src/views'))
+            .set('@mock', resolve('src/mock'))
     },
     // 服务转发
     devServer: {

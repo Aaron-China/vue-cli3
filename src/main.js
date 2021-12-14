@@ -8,6 +8,8 @@ import antdUse from './antdUse'
 import 'dayjs/locale/zh-cn';
 import './app.less'
 
+import '@mock/index.js'
+
 // 创建应用上下文
 const app = createApp(App)
 app.config.productionTip

@@ -173,14 +173,14 @@
 <script>
 import { defineComponent, reactive, ref, computed } from 'vue';
 import LargeSelect from '@components/largeSelect'
-import batchInput from '@components/batchInput/index'
+import BatchInput from '@components/batchInput'
 import { UpOutlined, DownOutlined, SearchOutlined, ReloadOutlined } from '@ant-design/icons-vue';
 
 export default defineComponent({
   name: 'searchModel',
   components: {
     LargeSelect,
-    batchInput,
+    BatchInput,
     UpOutlined,
     DownOutlined,
     SearchOutlined,

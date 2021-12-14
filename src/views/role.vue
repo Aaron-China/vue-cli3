@@ -23,8 +23,7 @@
 
 <script>
 import { defineComponent, reactive } from 'vue';
-import LargeTable from "@/components/largeTable";
-import CModal from "@/components/c-modal";
+import { LargeTable, CModal } from '@components/index.js'
 
 export default defineComponent({
   name: 'role',

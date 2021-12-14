@@ -61,6 +61,61 @@ export const ROUTE = [
         title: 'highCharts甘特图',
         component: () => import('@views/hightChartsGantt/index.vue')
       },
+      {
+        path: '/visual',
+        name: 'visual',
+        title: '大屏可视化',
+        component: PageLayout,
+        redirect: '/visual/dashboard/list',
+        children: [
+          {
+            path: '/visual/dashboard/list',
+            name: 'dashboardList',
+            title: '看板',
+            component: () => import('@views/visual/dashboard/list.vue')
+          },
+          {
+            path: '/visual/dashboard/detail/show',
+            name: 'dashboardDetailShow',
+            title: '看板详情',
+            hidden: true,
+            component: () => import('@views/visual/dashboard/showDetail.vue')
+          },
+          {
+            path: '/visual/dashboard/detail/edit',
+            name: 'dashboardDetailEdit',
+            title: '看板详情',
+            hidden: true,
+            component: () => import('@views/visual/dashboard/editDetail.vue')
+          },
+          {
+            path: '/visual/component',
+            name: 'component',
+            title: '组件',
+            component: () => import('@views/visual/component/list.vue')
+          },
+          {
+            path: '/visual/component/detail',
+            name: 'componentDetail',
+            title: '组件详情',
+            hidden: true,
+            component: () => import('@views/visual/component/detail.vue')
+          },
+          {
+            path: '/visual/datasource',
+            name: 'datasource',
+            title: '数据源',
+            component: () => import('@views/visual/datasource/list.vue')
+          },
+          {
+            path: '/visual/datasource/detail',
+            name: 'datasourceDetail',
+            title: '数据源详情',
+            hidden: true,
+            component: () => import('@views/visual/datasource/detail.vue')
+          },
+        ]
+      }
     ]
   },
   {

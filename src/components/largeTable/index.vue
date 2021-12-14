@@ -115,7 +115,6 @@ export default defineComponent({
       return col
     });
     watch(() => props.dataSource, v => {
-      console.log('00000000000')
       state.tableData = v.length > props.rows ? v.slice(0, props.rows) : v;
       state.totalHeight = v.length * props.rowHeight;
       initScroll();

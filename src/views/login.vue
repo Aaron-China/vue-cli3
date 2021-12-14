@@ -21,7 +21,7 @@
           />
         </a-form-item>
         <div class="item">
-          <a-button class="btn" type="primary" @click="login">登陆</a-button>
+          <a-button class="btn" type="primary" :loading="loading" @click="loginFunc">登陆</a-button>
         </div>
       </a-form>
     </div>
@@ -32,12 +32,15 @@
 import { defineComponent, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
+import { message } from 'ant-design-vue';
+import { login } from "@api/login";
 
 export default defineComponent({
   name: 'login',
   setup() {
     const store = useStore();
     const router = useRouter();
+    const loading = ref(false);
     const loginForm = ref();
     const formData = reactive({
       username: '',
@@ -49,48 +52,51 @@ export default defineComponent({
     };
 
     // 登陆
-    const login = () => {
+    const loginFunc = () => {
       loginForm.value.validate().then((v) => {
-        let permission = [
-            { type: 'menu', path: '/report', key: '' },
-            { type: 'btn', path: '/report', key: 'add' },
-            { type: 'btn', path: '/report', key: 'delete' },
-            { type: 'btn', path: '/report', key: 'export' },
-            { type: 'menu', path: '/setting/user/add' },
-            { type: 'menu', path: '/setting/user/edit' },
-            { type: 'menu', path: '/setting/user/delete' },
-            { type: 'menu', path: '/setting/role' },
-            { type: 'menu', path: '/login' },
-            { type: 'menu', path: '/hightChartsGantt' },
-          ], auth = {};
-        permission.filter(item => item.type === 'btn').forEach(item => {
-          if(auth[item.path]) {
-            auth[item.path][item.key] = true
+        loading.value = true;
+        login(v).then(res => {
+          if(res.code === 200) {
+            const { permission, token } = res.data;
+            let auth = {};
+            permission.filter(item => item.type === 'btn').forEach(item => {
+              if(auth[item.path]) {
+                auth[item.path][item.key] = true
+              } else {
+                auth[item.path] = {
+                  [item.key]: true
+                }
+              }
+            })
+            store.commit('app/setUser', {
+              user: { id: 1186, name: '张三' },
+              permission,
+              auth,
+              token
+            })
+            message.success('登陆成功');
+            router.push('/');
           } else {
-            auth[item.path] = {
-              [item.key]: true
-            }
+            message.error(res.msg);
           }
+          loading.value = false;
         })
-        store.commit('app/setUser', {
-          user: { id: 1186, name: '张三' },
-          permission,
-          auth
-        })
-        router.push('/')
+        .catch(error => {
+          loading.value = false;
+          console.log('error', error);
+          message.error(error)
+        });
       })
-      .catch(error => {
-        console.log('error', error);
-      });
     }
 
     return {
       loginForm,
+      loading,
       formData,
       rules,
       labelCol: { span: 5 },
       wrapperCol: { span: 12 },
-      login
+      loginFunc
     }
   }
 })

@@ -37,9 +37,7 @@
 <script>
 import { defineComponent, reactive } from 'vue';
 import { useStore } from 'vuex';
-import CTable from "@/components/c-table";
-import SearchModel from "@/components/searchModel";
-import EditModel from "@/components/editModel";
+import { CTable, SearchModel, EditModel } from '@components/index.js'
 import dayjs from 'dayjs'
 import { getList } from "@api/report";
 import { expoerExcel } from '@/utils/exportExcel'
@@ -123,10 +121,11 @@ export default defineComponent({
       }
       getList(params).then(res => {
         if (res.code === 200) {
-          table.dataSource = res.records
-          table.pagination.current = res.current
-          table.pagination.pageSize = res.size
-          table.pagination.total = res.total
+          let d = res.data;
+          table.dataSource = d.records;
+          table.pagination.current = d.current;
+          table.pagination.pageSize = d.size;
+          table.pagination.total = d.total;
         }
         table.loading = false;
       })
@@ -245,5 +244,5 @@ export default defineComponent({
   }
 })
 </script>
-<style lang="less" >
+<style lang="less">
 </style>

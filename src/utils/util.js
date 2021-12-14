@@ -16,6 +16,45 @@ export const filterMenu = (l, p) => {
   return arr
 }
 
+// 根据当前URL，获取menu需要的激活菜单
+export const getMenuKeys = (l, t) => {
+  // 递归无法终止，用str接收数据
+  let activeKeys = '', activeKey = '',  str = '';
+  for(let i = 0; i < l.length; i++) {
+    str = '';
+    // 找到了
+    if (l[i].path === t) {
+      activeKeys = l[i].name;
+      activeKey = l[i].name;
+      break;
+    } else { // 没找到，继续遍历深层
+      if (l[i].children && l[i].children.length) {
+        str = l[i].name;
+        mapMenu(l[i].children, t)
+      }
+    }
+  }
+  function mapMenu(l1, t1) {
+    for(let i = 0; i < l1.length; i++) {
+      if (l1[i].path === t1) {
+        activeKeys = `${str}-${l1[i].name}`;
+        activeKey = l1[i].name;
+        break;
+      } else {
+        if (l1[i].children && l1[i].children.length) {
+          str = `${str}-${l1[i].name}`;
+          mapMenu(l1[i].children, t)
+        }
+      }
+    }
+  };
+  return {
+    activeKeys,
+    activeKey: activeKey
+  }
+}
+
+
 // url传参，处理参数
 export function makeQuery (obj = {}) {
   let arr = [], str = '';
@@ -53,4 +92,25 @@ export function checkRepeat (_, value) {
   } else {
     return Promise.resolve();
   }
+}
+
+// 获取可视化组件数据
+// d 数据源的详情;     p 数据源的参数，格式在输入的时候限制，这里直接使用，预留参数，暂时没用到
+export const getCompData = (d, p) => {
+  let data = [];
+  try {
+    // json是静态数据，直接解析即可
+    if(d.type === 'json') {
+      data = d.content;
+    } else if(d.type === 'http') {
+      // http  这里不发请求，服务端发请求，避免跨域问题
+      // 这里只是对返回数据做一些约定好的数据处理
+      data = d.content;
+    } else {
+      console.log(`${d.type} 不是系统内置数据源，无法识别！`)
+    }
+  } catch (error) {
+    console.log(error)
+  }
+  return data
 }

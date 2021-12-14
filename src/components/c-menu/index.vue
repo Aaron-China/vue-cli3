@@ -1,5 +1,5 @@
 <template>
-  <div class="c-menu" :style="{ width: width }">
+  <div class="c-menu" :style="{ width: !spread ? width : '0px', minWidth: !spread ? width : '0px' }">
     <div class="header">XXS</div>
     <div class="contain">
       <!-- 一级菜单 -->
@@ -43,6 +43,13 @@
         </div>
       </div>
     </div>
+    <div :class="{ tool: true, toolActive: spread }" @click="onSpread">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div v-if="spread" class="right"></div>
+      <div v-else class="left"></div>
+    </div>
   </div>
 </template>
 
@@ -60,7 +67,7 @@ export default defineComponent({
   props:{
     width: {     // 宽度
       type: String,
-      default: '250px'
+      default: '220px'
     },
     list: {     // 菜单列表
       type: Array,
@@ -80,8 +87,17 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const router = useRouter();
+    const spread = ref(false);      // 是否展开菜单
     const activeKeys = ref(props.actives || ''); // 当前激活菜单链
     const activeKey = ref(props.active || '');  // 当前激活菜单
+
+    watch(() => props.active, v => {
+      activeKey.value = v
+    });
+    watch(() => props.actives, v => {
+      activeKeys.value = v
+    });
+
 
     // icon激活状态
     const icon = (d, t) => {
@@ -128,15 +144,21 @@ export default defineComponent({
         emit('change', d)
       }
     };
+    // 展开关闭菜单
+    const onSpread = () => {
+      spread.value = !spread.value
+    };
 
     return {
+      spread,
       activeKeys,
       activeKey,
       icon,
       actLine,
       children,
       row,
-      handleClick
+      handleClick,
+      onSpread
     }
   }
 })
@@ -144,6 +166,7 @@ export default defineComponent({
 
 <style lang="less" scoped>
   .c-menu {
+    position: relative;
     height: 100vh;
     background-color: #4065e0;
     color: #fff;
@@ -196,6 +219,56 @@ export default defineComponent({
       .item.active {
         height: auto;
         background-color: #2C4EBE;
+      }
+    }
+    .tool {
+      position: absolute;
+      top: 3px;
+      right: 2px;
+      z-index: 99;
+      cursor: pointer;
+      div {
+        width: 27px;
+        height: 2.5px;
+        margin-bottom: 8px;
+        background-color: #fff;
+      }
+      .left {
+        position: absolute;
+        top: 2px;
+        left: -11px;
+        width: 0;
+        height: 0;
+        background-color: transparent;
+        border-top: 10px solid transparent;
+        border-right: 10px solid #fff;
+        border-left: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+      }
+      .right {
+        position: absolute;
+        top: 2px;
+        right: -11px;
+        width: 0;
+        height: 0;
+        background-color: transparent;
+        border-top: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-left: 10px solid #fff;
+        border-bottom: 10px solid transparent;
+      }
+    }
+    .toolActive {
+      top: 3px;
+      right: -27px;
+      div {
+        background-color: @other;
+      }
+      .left {
+        border-right: 10px solid@other;
+      }
+      .right {
+        border-left: 10px solid @other;
       }
     }
   }

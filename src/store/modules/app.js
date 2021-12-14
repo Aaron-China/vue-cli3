@@ -21,6 +21,7 @@ const app = {
       state.user = d.user
       state.permission = d.permission
       state.auth = d.auth
+      state.token = d.token
     }
   },
   actions: {}

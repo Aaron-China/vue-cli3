@@ -148,12 +148,12 @@
 <script>
 import { defineComponent, ref, reactive, watch } from 'vue';
 import LargeSelect from '@components/largeSelect'
-import batchInput from '@components/batchInput/index'
+import BatchInput from '@components/batchInput'
 
 export default defineComponent({
   name: 'editModel',
   components: {
-    batchInput,
+    BatchInput,
     LargeSelect
   },
   props: {

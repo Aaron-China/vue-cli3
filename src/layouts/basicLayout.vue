@@ -1,7 +1,9 @@
 <template>
   <div class="basic-layout">
     <c-menu
-      :list="menu"
+      :list="menu.list"
+      :active="menu.activeKey"
+      :actives="menu.activeKeys"
     />
     <div class="content">
       <div class="header">
@@ -31,13 +33,14 @@
 </template>
 
 <script>
-import { defineComponent, ref, computed  } from 'vue';
+import { defineComponent, reactive, computed  } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
+import { CMenu } from '@components/index.js'
 import { UserOutlined } from '@ant-design/icons-vue';
-import CMenu from '@components/c-menu'
 import { ROUTE } from '@router/menu'
-import { filterMenu } from '@utils/util'
+import { filterMenu, getMenuKeys } from '@utils/util'
+import { getUserInfo } from "@api/login";
 
 export default defineComponent({
   name: 'basicLayout',
@@ -48,69 +51,69 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const router = useRouter();
-    const menu = ref([]);         //菜单列表
+    let menu = reactive({     //菜单
+      activeKey: '',
+      activeKeys: '',
+      list: []
+    });
     const user = computed(() => store.state.app.user);              // 用户信息
     const permission = computed(() => store.state.app.permission); // 权限
 
     // 初始化时，获取用户信息、权限等
-    const getUserInfo = () => {
-      if(store.state.app.user && store.state.app.user.id) return
-      let p = [
-        { type: 'menu', path: '/report', key: '' },
-        { type: 'btn', path: '/report', key: 'add' },
-        { type: 'btn', path: '/report', key: 'delete' },
-        { type: 'btn', path: '/report', key: 'export' },
-        { type: 'menu', path: '/setting/user/add' },
-        { type: 'menu', path: '/setting/user/edit' },
-        { type: 'menu', path: '/setting/user/delete' },
-        { type: 'menu', path: '/setting/role' },
-        { type: 'menu', path: '/login' },
-        { type: 'menu', path: '/hightChartsGantt' },
-      ], a = {};
-      p.filter(item => item.type === 'btn').forEach(item => {
-        if(a[item.path]) {
-          a[item.path][item.key] = true
-        } else {
-          a[item.path] = {
-            [item.key]: true
+    const getUserInfoFunc = () => {
+      getUserInfo().then(res => {
+        if(res.code === 200) {
+          let auth = {}, perm = res.data.permission, to = res.data.token;
+          perm.filter(item => item.type === 'btn').forEach(item => {
+            if(auth[item.path]) {
+              auth[item.path][item.key] = true
+            } else {
+              auth[item.path] = {
+                [item.key]: true
+              }
+            }
+          })
+          store.commit('app/setUser', {
+            user: { id: 1186, name: '张三' },
+            permission: perm,
+            auth,
+            token: to
+          })
+          
+          // 刷新界面、输入地址时，校验权限
+          let flag =  perm.some(item => item.path === window.location.pathname);
+          if(!flag) {
+            router.push('/login')
           }
+
+          // 按权限过滤菜单,转一下json，避免对象原型修改, 默认菜单数据
+          let m = JSON.parse(JSON.stringify(ROUTE[0].children)),
+          permi = perm.filter(item => item.type === 'menu'),
+          list = filterMenu(m, permi);
+          let actives = getMenuKeys(ROUTE[0].children, window.location.pathname)
+          menu.list = [...list];
+          menu.activeKey = actives.activeKey;
+          menu.activeKeys = actives.activeKeys;
+        } else {
+          message.error(res.msg);
         }
-      })
-      store.commit('app/setUser', {
-        user: { id: 1186, name: '张三' },
-        permission: p,
-        auth: a
       })
     }
-    getUserInfo();
-
-    // 按权限过滤菜单,转一下json，避免对象原型修改
-    let m = JSON.parse(JSON.stringify(ROUTE[0].children)),
-    permi = permission.value.filter(item => item.type === 'menu'),
-    list = filterMenu(m, permi);
-    menu.value = list;
-
-    // 菜单权限控制，路由拦截。注意，组件内部拦截，刷新界面、输入地址时，钩子函数不会触发
-    const controlMenu = () => {
-      // 刷新界面、输入地址时，校验权限
-      let flag =  permission.value.some(item => item.path === window.location.pathname);
-      if(!flag) {
-        router.push('/login')
-      }
-      router.beforeEach((to, from, next) => {
-        let flag =  permission.value.some(item => item.path === to.path);
-        if(flag) {
-          next();
-        } else {
-          router.push('/login')
-        }
-      })
-    };
     // 退出登录
     const logout = () => {
       router.push('/login')
     };
-    controlMenu();
+
+    getUserInfoFunc();
+    // 通过权限，监控路由
+    router.beforeEach((to, from, next) => {
+      let flag = permission.value.some(item => item.path === to.path);
+      if(flag) {
+        next();
+      } else {
+        router.push('/login')
+      }
+    });
 
     return {
       menu,

@@ -1,0 +1,10 @@
+// 普通公共组件
+export { default as BatchInput } from './batchInput/index.vue'
+export { default as CMenu } from './c-menu/index.vue'
+export { default as CModal } from './c-modal/index.vue'
+export { default as CTable } from './c-table/index.vue'
+export { default as EditModel } from './editModel/index.vue'
+export { default as LargeSelect } from './largeSelect/index.vue'
+export { default as LargeTable } from './largeTable/index.vue'
+export { default as SearchModel } from './searchModel/index.vue'
+export { default as ColorPicker } from './c-colorPicker/index.vue'

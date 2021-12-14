@@ -5,7 +5,7 @@ import notification from 'ant-design-vue/es/notification'
 
 // 创建 axios 实例
 const service = axios.create({
-    baseURL: '/', // api base_url
+    baseURL: '/api', // api base_url
     withCredentials: true,
     timeout: 60000, // 超时时间：6分钟 注意和nginx配置保持一致
     maxBodyLength: 31457280,  // 请求体最大长度 单位B，上限30MB 注意和nginx配置保持一致
