@@ -14,7 +14,7 @@ const DASHBOARD = {
       width: '1920px',
       height: '1080px',
       components: `[
-        {"id":1,"type":"CusText","title":"空调49周排产率","datasourceId": 1,"width":328,"height":174,"top":164,"left":54,"container":"blue","zIndex":1,
+        {"id":1,"type":"CusText","title":"空调49周排产率","datasourceId": 1,"width":328,"height":174,"top":164,"left":54,"container":"blue","zIndex":1,"controller": [4,5,6],
           "content":{"text":"1322321$14323请问请翁$2$3！！！","fontSize":15,"fontWeight":400,"color":"#000000","points":[{"point":"name","fontSize":"18","fontWeight":700,"color":"#0C00FF"},{"point":"value","color":"#00FF1D"},{"point":"tip","color":"#FF0041"}],"template":"object"}},
         {"id":2,"type":"CusText","title":"洗涤各工厂订单","width":326,"height":175,"top":167,"left":675,"container":"blue","zIndex":2,
           "content":{"text":"我就是一段静态文本！！！","fontSize":"18","fontWeight":400,"color":"#FF1900","points":[]}},

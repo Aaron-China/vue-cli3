@@ -12,7 +12,13 @@ const LOGIN = {
       { type: 'menu', path: '/setting/role' },
       { type: 'menu', path: '/login' },
       { type: 'menu', path: '/hightChartsGantt' },
-      
+      { type: 'menu', path: '/visual/dashboard/list' },
+      { type: 'menu', path: '/visual/dashboard/detail/show' },
+      { type: 'menu', path: '/visual/dashboard/detail/edit' },
+      { type: 'menu', path: '/visual/component' },
+      { type: 'menu', path: '/visual/component/detail' },
+      { type: 'menu', path: '/visual/datasource' },
+      { type: 'menu', path: '/visual/datasource/detail' },
     ]
   }
 }

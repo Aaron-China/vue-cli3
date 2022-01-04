@@ -47,7 +47,7 @@ export const getMenuKeys = (l, t) => {
         }
       }
     }
-  };
+  }
   return {
     activeKeys,
     activeKey: activeKey
@@ -95,8 +95,8 @@ export function checkRepeat (_, value) {
 }
 
 // 获取可视化组件数据
-// d 数据源的详情;     p 数据源的参数，格式在输入的时候限制，这里直接使用，预留参数，暂时没用到
-export const getCompData = (d, p) => {
+// d 数据源的详情;
+export const getCompData = (d) => {
   let data = [];
   try {
     // json是静态数据，直接解析即可

@@ -60,9 +60,9 @@ export default defineComponent({
         months: ['一月', '儿月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
       },
     });
-    const dragStart = (e) => {
+    const dragStart = () => {
     }
-    const drag = (e) => {
+    const drag = () => {
     }
     const drop = (e) => {
       const { newPoint = {}, target = {} } = e;
@@ -89,7 +89,7 @@ export default defineComponent({
       }
     }
     // 选中，可以弹窗，编辑一些业务数据
-    const handleSelect = (e) => {
+    const handleSelect = () => {
       console.log('选中')
     }
     // 获取最终数据

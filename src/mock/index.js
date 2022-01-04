@@ -53,7 +53,7 @@ Mock.mock('/api/report/list', 'post', d => {
 })
 
 // 获取看板列表
-Mock.mock('/api/dashboard/list', 'post', d => {
+Mock.mock('/api/dashboard/list', 'post', () => {
   return {
     code: 200,
     msg: 'success',
@@ -67,7 +67,7 @@ Mock.mock('/api/dashboard/list', 'post', d => {
 })
 
 // 获取组件列表
-Mock.mock('/api/component/list', 'post', d => {
+Mock.mock('/api/component/list', 'post', () => {
   return {
     code: 200,
     msg: 'success',
@@ -81,7 +81,7 @@ Mock.mock('/api/component/list', 'post', d => {
 })
 
 // 获取数据源列表
-Mock.mock('/api/datasource/list', 'post', d => {
+Mock.mock('/api/datasource/list', 'post', () => {
   return {
     code: 200,
     msg: 'success',
@@ -136,12 +136,25 @@ Mock.mock('/api/datasource/detail', 'post', d => {
 // 获取数据源的 具体数据
 Mock.mock('/api/datasource/data', 'post', d => {
   let body = JSON.parse(d.body);
+  console.log(body)
+  let data = {};
+  
+
+  if(body.id === 1 && body.query) {
+    if(body.query.type === 'checkBox') {
+      data = { ...DATASOURCE.query[0] }
+    } else if(body.query.type === 'select') {
+      data = { ...DATASOURCE.query[1] }
+    } else{
+      data = { ...DATASOURCE.query[2] }
+    }
+  } else {
+    data = { ...DATASOURCE.data[body.id] }
+  }
 
   return {
     code: 200,
     msg: 'success',
-    data: {
-      ...DATASOURCE.data[body.id]
-    }
+    data: { ...data }
   }
 })

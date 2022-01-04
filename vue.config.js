@@ -55,9 +55,10 @@ module.exports = {
         },
     },
 
-    // disable source map in production
+    // 打包不生成未压缩的文件
     productionSourceMap: false,
-    lintOnSave: false,
+    // 开发环境，运行时开启eslint
+    lintOnSave: true,
     // babel-loader no-ignore node_modules/*
     transpileDependencies: [],
 }

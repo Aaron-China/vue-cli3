@@ -74,7 +74,7 @@ export default defineComponent({
     },
     points: {
       type: Array,
-      default: []
+      default: () => []
     },
   },
   setup(props) {

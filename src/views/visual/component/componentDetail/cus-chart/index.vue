@@ -16,7 +16,7 @@ export default defineComponent({
       type: String,
     },
   },
-  setup(props, { emit }) {
+  setup() {
     const visible = ref(false);     // 显示弹窗
 
     return {

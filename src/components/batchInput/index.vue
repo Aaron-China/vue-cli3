@@ -78,7 +78,7 @@ export default defineComponent({
     }
     // 弹窗确定
     const handleOk = () => {
-      const reg = new RegExp("[\r\n]","g");
+      const reg = new RegExp("[\\r\\n]","g");
       let newValue = (textarea.value || '').replace(reg, ',')
       if(newValue[newValue.length- 1] === ',') {
         newValue = newValue.slice(0, newValue.length - 1)

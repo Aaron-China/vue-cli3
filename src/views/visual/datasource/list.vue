@@ -114,6 +114,7 @@ export default defineComponent({
         table.loading = false;
       })
       .catch(err => {
+        console.log(err);
         table.loading = false;
       });
     }
@@ -129,7 +130,7 @@ export default defineComponent({
       table.selectedRowKeys = rows;
     }
     // 分页、筛选、排序变化
-    const tableChange = (pagination, filters, sorter) => {
+    const tableChange = (pagination) => {
       table.pagination.current = pagination.current
       table.pagination.pageSize = pagination.pageSize
       getData()

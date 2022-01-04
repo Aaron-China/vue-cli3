@@ -243,7 +243,7 @@ export default defineComponent({
     // antd3自定义表单组件绑定域还不支持，这里自定义组件暂时手动修改数据
     const handleCustomChange = (v, d) => {
       formData[d.key] = v
-      if(d.needBack) handleBack(e, d.key)
+      if(d.needBack) handleBack(v, d.key)
     }
 
     return {

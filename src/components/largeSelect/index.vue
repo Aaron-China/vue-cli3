@@ -133,7 +133,7 @@ export default defineComponent({
     }
 
     selectData.list = props.list.length > props.rows ? props.list.slice(0, props.rows) : props.list;
-    selectData.res = props.list;
+    selectData.res = [...props.list];
     totalHeight.value = props.list.length * props.rowHeight
     uid.value = `s_${(new Date()).valueOf()}`;
 

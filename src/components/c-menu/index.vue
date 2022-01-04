@@ -71,7 +71,7 @@ export default defineComponent({
     },
     list: {     // 菜单列表
       type: Array,
-      default: []
+      default: () => { return [] }
     },
     active: {   // 当前激活菜  例： edit
       type: String,

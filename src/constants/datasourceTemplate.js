@@ -14,10 +14,10 @@ export const DATASOURCE_TEMPLATE = {
     }
     return keys
   },
-  array: (d) => {
+  array: () => {
     
   },
-  arrayObject: (d) => {
+  arrayObject: () => {
     
   },
 }

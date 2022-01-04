@@ -33,6 +33,7 @@ import { useRouter } from 'vue-router';
 import DrawContainer from '@views/visual/dashboard/drawContainer'
 import container from '@views/visual/dashboard/container'
 import BaseComponent from '@views/visual/component/componentDetail/index.vue'
+import { message } from 'ant-design-vue';
 import { getDashboard } from "@api/visual";
 
 export default defineComponent({
@@ -107,7 +108,7 @@ export default defineComponent({
         list = list.filter(item => {
           return item.id !== obj.id
         })
-      };
+      }
       formData.value.components = [...list];
     }
     // 保存

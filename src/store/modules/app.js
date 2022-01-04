@@ -1,7 +1,7 @@
 const app = {
   namespaced: 'app',
   state: () => ({
-    token: '3mnuehn457873nberuwen',
+    token: '',
     user: {},
     factoryList: [
       {value: '001', label: '华为'},
@@ -15,13 +15,15 @@ const app = {
   }),
   mutations: {
     setToken: (state, d) => {
-      state.token = d
+      state.token = d;
+      localStorage.setItem('token', d);
     },
     setUser: (state, d) => {
       state.user = d.user
       state.permission = d.permission
       state.auth = d.auth
-      state.token = d.token
+      state.token = d.token;
+      localStorage.setItem('token', d.token);
     }
   },
   actions: {}

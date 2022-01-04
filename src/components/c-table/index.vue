@@ -30,7 +30,7 @@ export default defineComponent({
     },
     dataSource: {
       type: Array,
-      default: []
+      default: () => { return [] }
     },
     rowKey: {
       type: String,
@@ -38,16 +38,18 @@ export default defineComponent({
     },
     columns: {
       type: Array,
-      default: []
+      default: () => { return [] }
     },
     pagination: {
-      default: {
-        current: 1,
-        pageSize: 20,
-        total: 0,
-        showSizeChanger: true,
-        showQuickJumper: true,
-        pageSizeOptions: ["20", "50", "100", "200", "500", "1000"]
+      default: () => { 
+        return {
+          current: 1,
+          pageSize: 20,
+          total: 0,
+          showSizeChanger: true,
+          showQuickJumper: true,
+          pageSizeOptions: ["20", "50", "100", "200", "500", "1000"]
+        }
       }
     },
     selected: { // 是否可选
@@ -67,7 +69,7 @@ export default defineComponent({
     tableChange: { // 分页、筛选、排序的回调
       type: Function,
     },
-    selectedRow: { // 分页、筛选、排序的回调
+    selectedRow: {
       type: Array,
       default: () => { return [] }
     },

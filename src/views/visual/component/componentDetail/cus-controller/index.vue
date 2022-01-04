@@ -41,6 +41,10 @@ import dayjs from 'dayjs'
 export default defineComponent({
   name: 'cus-controller',
   props:{
+    id: {        // 组件是否绑定动态数据源
+      require: true,
+      default: ''
+    },
     dynamic: {        // 组件是否绑定动态数据源
       type: Boolean,
       default: false
@@ -70,7 +74,7 @@ export default defineComponent({
           dayjs(v[1]).format(format)
         ]: v
       }
-      emit('onChange', {type, data})
+      emit('onChange', {id: props.id, type, data})
     }
 
     return {

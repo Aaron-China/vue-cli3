@@ -20,7 +20,7 @@
         >
           <!-- 边框以定位的形式展示 -->
           <component class="cus-border" :is="item.container" :title="item.title" />
-          <base-component :formData="item" @onControl="handleControl" />
+          <base-component :formData="item"  :parameter="parameter" @onControl="handleControl" />
         </div>
       </div>
     </div>
@@ -33,6 +33,7 @@ import { useRouter } from 'vue-router';
 import DrawContainer from '@views/visual/dashboard/drawContainer'
 import container from '@views/visual/dashboard/container'
 import BaseComponent from '@views/visual/component/componentDetail/index.vue'
+import { message } from 'ant-design-vue';
 import { getDashboard } from "@api/visual";
 
 export default defineComponent({
@@ -43,7 +44,7 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter();
-    let formData = ref({});
+    let formData = ref({}), parameter = ref({});
     const checkItem = ref();
     const { query = {} } = router.currentRoute._value;
 
@@ -53,7 +54,6 @@ export default defineComponent({
         if (res.code === 200) {
           const { data = {} } = res;
           formData.value = {...data, components: JSON.parse(data.components)}
-          console.log(formData.value)
         } else {
           message.error(res.msg)
         }
@@ -61,7 +61,7 @@ export default defineComponent({
     }
     // 组件回调，主要是控制器
     const handleControl = (d) => {
-      console.log(d)
+      parameter.value = {...d}
     }
     // 返回上级
     const goBack = () => {
@@ -107,7 +107,7 @@ export default defineComponent({
         list = list.filter(item => {
           return item.id !== obj.id
         })
-      };
+      }
       formData.value.components = [...list];
     }
     // 保存
@@ -121,6 +121,7 @@ export default defineComponent({
     return {
       formData,
       checkItem,
+      parameter,
       handleControl,
       goBack,
       onCheck,

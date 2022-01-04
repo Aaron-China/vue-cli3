@@ -6,7 +6,7 @@
     >
       <color-picker
         v-show="visible"
-        v-model:color="value"
+        :color="value"
         :sucker-hide="true"
         @changeColor="onChange"
       />
@@ -30,9 +30,11 @@ export default defineComponent({
     value: {},
     cusStyle: {   // 颜色选择器的样式，比如位置等
       type: Object,
-      default: {
-        top: '-170px',
-        left: '37px'
+      default: () => {
+        return {
+          top: '-170px',
+          left: '37px'
+        }
       }
     }
   },

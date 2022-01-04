@@ -62,6 +62,38 @@ const DATASOURCE = {
       content: [{"line":"总装线","value":122,"child":{"a":666}},{"line":"钣金门","value":59},{"line":"集成箱","value":312},{"line":"把手","value":1026},{"line":"自滑轮","value":92}]
     }
   },
+  query: [
+    {
+      type: 'json',
+      content: {
+        "no":"002",
+        "name":"北汽蓝谷",
+        "value":"87%",
+        "pro":666,
+        "tip":"阿尔法狐yyds"
+      }
+    },
+    {
+      type: 'json',
+      content: {
+        "no":"003",
+        "name":"贵州茅台",
+        "value":"99%",
+        "pro":1257,
+        "tip":"十里飘香，唯有茅王"
+      }
+    },
+    {
+      type: 'json',
+      content: {
+        "no":"004",
+        "name":"中芯国际",
+        "value":"96%",
+        "pro":999,
+        "tip":"9nm?7nm? 太low了，我的0.35nm工艺已经量产了"
+      }
+    },
+  ]
 }
 
 export default DATASOURCE

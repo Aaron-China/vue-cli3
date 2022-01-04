@@ -1,7 +1,7 @@
 import axios from 'axios'
 import router from '@router/index.js'
-import store from '@store/index.js'
 import notification from 'ant-design-vue/es/notification'
+const token = localStorage.getItem('token');
 
 // 创建 axios 实例
 const service = axios.create({
@@ -16,6 +16,7 @@ const err = (error) => {
     if (error.response) {
         const data = error.response.data
         if (error.response.status === 401) { // 登录失效
+            localStorage.setItem('token', '');
             router.push({path: '/login'})
         } else if (error.response.status === 402) {  // 缺少权限
             notification.error({
@@ -48,7 +49,7 @@ const err = (error) => {
 
 // 请求拦截，设置token
 service.interceptors.request.use((config) => {
-    config.headers['Access-Token'] = store.state.app.token || ''
+    config.headers['Access-Token'] = token || ''
     return config
 }, err)
 

@@ -38,6 +38,7 @@ import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import { CMenu } from '@components/index.js'
 import { UserOutlined } from '@ant-design/icons-vue';
+import { message } from 'ant-design-vue';
 import { ROUTE } from '@router/menu'
 import { filterMenu, getMenuKeys } from '@utils/util'
 import { getUserInfo } from "@api/login";
@@ -101,6 +102,7 @@ export default defineComponent({
     }
     // 退出登录
     const logout = () => {
+      store.commit('app/setToken', '')
       router.push('/login')
     };
 

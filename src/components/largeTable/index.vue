@@ -33,7 +33,7 @@ export default defineComponent({
     },
     dataSource: {
       type: Array,
-      default: []
+      default: () => { return [] }
     },
     rowKey: {
       type: String,
@@ -41,17 +41,19 @@ export default defineComponent({
     },
     columns: {
       type: Array,
-      default: []
+      default: () => { return [] }
     },
     pagination: {
       type: Object,
-      default: {
-        current: 1,
-        pageSize: 20,
-        tota: 0,
-        showSizeChanger: true,
-        showQuickJumper: true,
-        pageSizeOptions: ["20", "50", "100", "200", "500", "1000", "2000"]
+      default: () => { 
+        return {
+          current: 1,
+          pageSize: 20,
+          tota: 0,
+          showSizeChanger: true,
+          showQuickJumper: true,
+          pageSizeOptions: ["20", "50", "100", "200", "500", "1000", "2000"]
+        }
       }
     },
     rows: {   // 可视区域展示多少行
@@ -153,7 +155,7 @@ export default defineComponent({
       if(props.selected) emit("selectChange", d, dl);
     }
     // 注意全选，需要手动填充数据
-    const handleSelectAll =(d,dl) => {
+    const handleSelectAll =(d) => {
       let keys = [], dates = []
       if(d) {
         keys = props.dataSource.map(item => item[props.rowKey])

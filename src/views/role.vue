@@ -8,7 +8,6 @@
       :pagination="table.pagination"
       :total="table.pagination.total"
       :selectedRow="table.selectedRowId"
-      @tableChange="tableChange"
       @selectChange="handleSelect"
     >
     </large-table>
@@ -69,15 +68,12 @@ export default defineComponent({
       list.push({id: i, factoryName: `${i+1}测试数据`, materialCode: 'wqeweq请问请二无群二', materialName: 'ewrewwqeweq请问请二无群二第三方第三方'});
     }
     table.dataSource = list;
+    table.pagination.current = 1;
+    table.pagination.pageSize = 8000;
     table.pagination.total = 8000;
 
     const handleModal = () => {
       modal.visible = !modal.visible
-    }
-    // 分页、筛选、排序变化
-    const tableChange = (pagination, filters, sorter) => {
-      // table.pagination.current = pagination.current
-      // table.pagination.pageSize = pagination.pageSize
     }
     // 选择表格数据
     const handleSelect = (keys, rows) => {
@@ -90,7 +86,6 @@ export default defineComponent({
       table,
       modal,
       handleModal,
-      tableChange,
       handleSelect,
     }
   },

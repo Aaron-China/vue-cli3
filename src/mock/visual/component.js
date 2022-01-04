@@ -14,6 +14,7 @@ const COMPONENT = {
       title: '空调49周排产率',
       type: 'CusText',
       datasourceId: 1,
+      controller: [4,5,6],
       content: '{"text":"1322321$14323请问请翁$2$3！！！","fontSize":15,"fontWeight":400,"color":"#000000","points":[{"point":"name","fontSize":"18","fontWeight":700,"color":"#0C00FF"},{"point":"value","color":"#00FF1D"},{"point":"tip","color":"#FF0041"}],"template":"object"}'
     },
     2: {
