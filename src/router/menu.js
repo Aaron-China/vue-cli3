@@ -31,19 +31,19 @@ export const ROUTE = [
                 path: '/setting/user/add',
                 name: 'add',
                 title: '增加',
-                component: () => import('@views/user.vue')
+                component: () => import('@views/user/add.vue')
               },
               {
                 path: '/setting/user/edit',
                 name: 'edit',
                 title: '修改',
-                component: () => import('@views/user.vue')
+                component: () => import('@views/user/edit.vue')
               },
               {
                 path: '/setting/user/delete',
                 name: 'delete',
                 title: '删除',
-                component: () => import('@views/user.vue')
+                component: () => import('@views/user/delete.vue')
               },
             ]
           },

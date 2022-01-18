@@ -88,7 +88,7 @@ export default defineComponent({
       handleModal,
       handleSelect,
     }
-  },
+  }
 })
 </script>
 

@@ -66,6 +66,7 @@ const modalFormList = [
 ]
 
 export default defineComponent({
+  name: 'report',
   components: {
     SearchModel,
     EditModel,
@@ -221,7 +222,7 @@ export default defineComponent({
     for (let i = 0; i < 999; i++) {
       list.push({label: i+1, value: i+1})
     }
-    formList[4].option = list
+    formList[4].option = list;
     getData();
 
     return {
