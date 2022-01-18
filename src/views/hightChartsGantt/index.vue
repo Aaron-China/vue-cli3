@@ -106,7 +106,7 @@ export default defineComponent({
       console.log(data)
     }
 
-
+ 
     onMounted(() => {
       try {
         gantt.value = Highcharts.ganttChart('container', {
@@ -134,6 +134,30 @@ export default defineComponent({
               }
             },
           }],
+          // 数据横跨时间段过大，label如果写死，比如小时，hightcharts不会获取小时数据，还是天或者年的，会导致小时一直是00:00
+          // 所以，拿到数据要做好判断，根据时间跨度，动态调整X轴的的 formatter，达到最好的效果
+
+          // xAxis: [{
+          //   currentDateIndicator: true,
+          //   tickPixelInterval: 70,
+          //   grid: {
+          //     borderWidth: 1, // 右侧表头边框宽度
+          //     cellHeight: 35, // 右侧日期表头高度
+          //   },
+          //   labels: {
+          //     align: 'center',
+          //     formatter: function() {
+          //       return `${dayjs(this.value).format('HH:mm')}`;
+          //     }
+          //   },
+          // }, {
+          //   labels: {
+          //     align: 'center',
+          //     formatter: function() {
+          //       return `${dayjs(this.value).format('YYYY年M月D')}  ${WEEKS[dayjs(this.value).day()]}`;
+          //     }
+          //   },
+          // }],
           yAxis: {
             type: 'category',
             grid: {
@@ -205,15 +229,15 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style  lang="less" scoped>
 .hightChart-gantt {
   overflow-x: auto;
 	-webkit-overflow-scrolling: touch;
-}
-#container {
-	max-width: 1200px;
-	min-width: 800px;
-	height: 400px;
-	margin: 1em auto;
+  #container {
+    max-width: 12000px;
+    min-width: 800px;
+    height: 400px;
+    margin: 1em auto;
+  }
 }
 </style>
