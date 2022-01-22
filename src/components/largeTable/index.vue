@@ -189,7 +189,8 @@ export default defineComponent({
     });
     onBeforeUnmount(() => {
       if(state.scrollEle) {
-        document.querySelector('.c-large-table .sc').removeEventListener('scroll', handleScroll);
+        let sc = document.querySelector('.c-large-table .sc');
+        if(sc) sc.removeEventListener('scroll', handleScroll);
         state.scrollEle = "";
       }
     });

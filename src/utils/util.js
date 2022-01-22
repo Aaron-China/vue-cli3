@@ -43,15 +43,22 @@ export const getMenuKeys = (l, t) => {
       } else {
         if (l1[i].children && l1[i].children.length) {
           str = `${str}-${l1[i].name}`;
-          mapMenu(l1[i].children, t)
+          mapMenu(l1[i].children, t);
         }
       }
     }
   }
-  return {
+
+  let res = {
     activeKeys,
     activeKey: activeKey
-  }
+  };
+
+  // 释放闭包锁定的变量
+  activeKeys = null;
+  activeKey = null;
+  str = null;
+  return res
 }
 
 
