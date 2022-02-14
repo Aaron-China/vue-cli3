@@ -41,7 +41,7 @@ import { UserOutlined } from '@ant-design/icons-vue';
 import { message } from 'ant-design-vue';
 import { ROUTE } from '@router/menu'
 import { filterMenu, getMenuKeys } from '@utils/util'
-import { getUserInfo } from "@api/login";
+import { getUserInfo, getUserInfoMock } from "@api/login";
 
 export default defineComponent({
   name: 'basicLayout',
@@ -59,11 +59,14 @@ export default defineComponent({
     });
     const user = computed(() => store.state.app.user);              // 用户信息
     const permission = computed(() => store.state.app.permission); // 权限
+    console.log(user)
 
     // 初始化时，获取用户信息、权限等
-    const getUserInfoFunc = () => {
-      getUserInfo().then(res => {
-        if(res.code === 200) {
+    const getUserInfoFunc = async () => {
+      try {
+        const user = await getUserInfo();
+        const res = await getUserInfoMock();
+        if(user.code === 200) {
           let auth = {}, perm = res.data.permission, to = res.data.token;
           perm.filter(item => item.type === 'btn').forEach(item => {
             if(auth[item.path]) {
@@ -75,7 +78,7 @@ export default defineComponent({
             }
           })
           store.commit('app/setUser', {
-            user: { id: 1186, name: '张三' },
+            user: { ...user.data },
             permission: perm,
             auth,
             token: to
@@ -96,9 +99,12 @@ export default defineComponent({
           menu.activeKey = actives.activeKey;
           menu.activeKeys = actives.activeKeys;
         } else {
-          message.error(res.msg);
+          message.error(user.msg);
         }
-      })
+      } catch (error) {
+        console.log('error', error);
+        message.error(error)
+      }
     }
     // 退出登录
     const logout = () => {
@@ -109,7 +115,8 @@ export default defineComponent({
     getUserInfoFunc();
     // 通过权限，监控路由
     router.beforeEach((to, from, next) => {
-      let flag = permission.value.some(item => item.path === to.path);
+      // let flag = permission.value.some(item => item.path === to.path);
+      let flag = true
       if(flag) {
         next();
       } else {

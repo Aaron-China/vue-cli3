@@ -224,6 +224,7 @@ export default defineComponent({
     }
     formList[4].option = list;
     getData();
+    console.log(store.state.app)
 
     return {
       search,            // 表格查询条件

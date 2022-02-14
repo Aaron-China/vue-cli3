@@ -1,5 +1,6 @@
-import BasicLayout from '@layouts/basicLayout'
+import BasicLayout from '@layouts/basicLayout' 
 import PageLayout from '@layouts/pageLayout'
+
 export const ROUTE = [
   {
     path: '/',
@@ -115,7 +116,34 @@ export const ROUTE = [
             component: () => import('@views/visual/datasource/detail.vue')
           },
         ]
-      }
+      },
+      {
+        path: '/socket',
+        name: 'socket',
+        title: 'socket长连接',
+        component: PageLayout,
+        redirect: '/socket/chat/user',
+        children: [
+          {
+            path: '/socket/chat/user',
+            name: 'chatUser',
+            title: '私聊',
+            component: () => import('@views/socket/chatUser/index.vue')
+          },
+          {
+            path: '/socket/chat/group',
+            name: 'chatGroup',
+            title: '群聊',
+            component: () => import('@views/socket/chatGroup/index.vue')
+          },
+          {
+            path: '/socket/largeFile',
+            name: 'largeFile',
+            title: '大文件传输',
+            component: () => import('@views/socket/largeFile/index.vue')
+          },
+        ]
+      },
     ]
   },
   {

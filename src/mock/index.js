@@ -9,18 +9,18 @@ Mock.setup({
   timeout: 700
 });
 
-// 登陆
-Mock.mock('/api/login', 'post', () => {
-  return {
-    code: 200,
-    msg: 'success',
-    data: {
-      ...LOGIN.userInfo
-    }
-  }
-})
+// // 登陆
+// Mock.mock('/api/login', 'post', () => {
+//   return {
+//     code: 200,
+//     msg: 'success',
+//     data: {
+//       ...LOGIN.userInfo
+//     }
+//   }
+// })
 // 获取用户信息
-Mock.mock('/api/getUserInfo', 'post', () => {
+Mock.mock('/api/getUserInfo/mock', 'post', () => {
   return {
     code: 200,
     msg: 'success',

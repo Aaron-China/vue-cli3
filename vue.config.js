@@ -42,13 +42,13 @@ module.exports = {
     devServer: {
         port: 8003,
         proxy: {
-            '/WebSocketConfig/': {
-                target: 'ws://test.com', 
+            '/chat/': {
+                target: 'ws://localhost:3000', 
                 changeOrigin: true,
-                ws: true,    // 开启sockjs
+                ws: false,    // 开启sockjs
             },
             '/api/': {
-                target: 'http://test.com', 
+                target: 'http://localhost:3000', 
                 changeOrigin: true,
                 ws: false,    // 关闭sockjs
             },

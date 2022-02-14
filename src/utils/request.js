@@ -1,5 +1,6 @@
 import axios from 'axios'
 import router from '@router/index.js'
+import Cookies from 'js-cookie'
 import notification from 'ant-design-vue/es/notification'
 const token = localStorage.getItem('token');
 
@@ -49,7 +50,8 @@ const err = (error) => {
 
 // 请求拦截，设置token
 service.interceptors.request.use((config) => {
-    config.headers['Access-Token'] = token || ''
+    config.headers['Access-Token'] = token
+    Cookies.set('Access-Token', token);
     return config
 }, err)
 

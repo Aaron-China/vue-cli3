@@ -10,7 +10,14 @@ export function login (d) {
 
 export function getUserInfo (d) {
     return axios({
-        url: `/getUserInfo`,
+        url: `/userInfo`,
+        method: 'post',
+        data: d
+    })
+}
+export function getUserInfoMock (d) {
+    return axios({
+        url: `/getUserInfo/mock`,
         method: 'post',
         data: d
     })

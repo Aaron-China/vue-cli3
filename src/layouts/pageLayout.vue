@@ -9,14 +9,10 @@
 </template>
 
 <script>
-export default {
-  data () {
-    return {}
-  },
-  computed: {},
-  created () {},
-  methods: {}
-}
+import { defineComponent } from 'vue';
+export default defineComponent({
+  name: 'pageLayout'
+})
 </script>
 
 <style lang="less" scoped>

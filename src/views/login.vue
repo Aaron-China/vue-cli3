@@ -33,7 +33,7 @@ import { defineComponent, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import { message } from 'ant-design-vue';
-import { login } from "@api/login";
+import { login, getUserInfoMock } from "@api/login";
 
 export default defineComponent({
   name: 'login',
@@ -52,12 +52,15 @@ export default defineComponent({
     };
 
     // 登陆
+    // 为了测试方便，登陆和获取权限分写了，权限还是mock获取
     const loginFunc = () => {
-      loginForm.value.validate().then((v) => {
+      loginForm.value.validate().then(async (v) => {
         loading.value = true;
-        login(v).then(res => {
-          if(res.code === 200) {
-            const { permission, token } = res.data;
+        try {
+          const user = await login({ name: v.username, account: v.username, password: v.password });
+          const info = await getUserInfoMock();
+          if(user.code === 200) {
+            const { permission, token } = info.data;
             let auth = {};
             permission.filter(item => item.type === 'btn').forEach(item => {
               if(auth[item.path]) {
@@ -69,7 +72,7 @@ export default defineComponent({
               }
             })
             store.commit('app/setUser', {
-              user: { id: 1186, name: '张三' },
+              user: { ...user.data },
               permission,
               auth,
               token
@@ -77,15 +80,13 @@ export default defineComponent({
             message.success('登陆成功');
             router.push('/');
           } else {
-            message.error(res.msg);
+            message.error(user.msg);
           }
-          loading.value = false;
-        })
-        .catch(error => {
+        } catch (error) {
           loading.value = false;
           console.log('error', error);
           message.error(error)
-        });
+        }
       })
     }
 

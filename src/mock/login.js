@@ -19,6 +19,10 @@ const LOGIN = {
       { type: 'menu', path: '/visual/component/detail' },
       { type: 'menu', path: '/visual/datasource' },
       { type: 'menu', path: '/visual/datasource/detail' },
+
+      { type: 'menu', path: '/socket/chat/user' },
+      { type: 'menu', path: '/socket/chat/group' },
+      { type: 'menu', path: '/socket/largeFile' },
     ]
   }
 }
